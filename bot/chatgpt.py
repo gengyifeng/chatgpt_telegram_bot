@@ -50,13 +50,13 @@ CHAT_MODES = {
     "multi_rounds_summary": {
         "name": "Multiple Rounds ChatGPT With Summary",
         "welcome_message": "Hi, I'm <b>Multiple Rounds ChatGPT</b>. How can I help you?",
-        "prompt_start": '''In the following conversations, your response in every turn contains two parts. Before answer the current querstion, you make the first part with a summary with "Summary:", which summary the content of your whole last response containing first paragraph within 1000 tokens. If there is no previous response, return "empty" as the first part in new response.  The second part is the answer to the current question.  If the question is in Chinese, please answer in Chinese. Don't forget to generate "Summary:" part in every turn. Let's start.'''
+        "prompt_start": '''If the question is in Chinese, please make sure the whole response is in Chinese. In the following conversations, your response in every turn contains two parts. Before answer the current querstion, you make the first part with a summary with "Summary:", which summary the content of your whole last response containing first paragraph within 1000 tokens. If there is no previous response, return "empty" as the first part in new response.  The second part is the answer to the current question.   Don't forget to generate "Summary:" part in every turn. '''
     },
 }
 
 OPENAI_COMPLETION_OPTIONS = {
     "temperature": 0.7,
-    "max_tokens": 1000,
+    "max_tokens": 3600,
     "top_p": 1,
     "frequency_penalty": 0,
     "presence_penalty": 0
