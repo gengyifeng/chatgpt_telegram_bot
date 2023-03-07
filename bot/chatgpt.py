@@ -43,8 +43,14 @@ CHAT_MODES = {
 
     "default": {
         "name": "Default ChatGPT",
-        "welcome_message": "Hi, I'm <b>Defaut GPT</b>. How can I help you?",
+        "welcome_message": "Hi, I'm <b>Defaut ChatGPT</b>. How can I help you?",
         "prompt_start": ""
+    },
+
+    "multi_rounds_summary": {
+        "name": "Multiple Rounds ChatGPT With Summary",
+        "welcome_message": "Hi, I'm <b>Multiple Rounds ChatGPT</b>. How can I help you?",
+        "prompt_start": '''In the following conversations, your response in every turn contains two parts. Before answer the current querstion, you make the first part with a summary with "Summary:", which summary the content of your whole last response containing first paragraph within 1000 tokens. If there is no previous response, return "empty" as the first part in new response.  The second part is the answer to the current question.  If the question is in Chinese, please answer in Chinese. Don't forget to generate "Summary:" part in every turn. Let's start.'''
     },
 }
 

@@ -106,21 +106,37 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
         message = message or update.message.text
 
         chatgpt_instance = chatgpt.ChatGPT(use_chatgpt_api=config.use_chatgpt_api)
-        answer, n_used_tokens, n_first_dialog_messages_removed = chatgpt_instance.send_message(
-            message,
-            dialog_messages=db.get_dialog_messages(user_id, dialog_id=None),
-            chat_mode=db.get_user_attribute(user_id, "current_chat_mode"),
-        )
+        mode = db.get_user_attribute(user_id, "current_chat_mode")
+        if mode == "multi_rounds_summary": 
+            answer, n_used_tokens, n_first_dialog_messages_removed = chatgpt_instance.send_message(
+                message,
+                dialog_messages=db.get_dialog_messages(user_id, dialog_id=None),
+                chat_mode=mode,
+            )
+            # update user data
+            new_dialog_message = {"user": message, "bot": answer, "date": datetime.now()}
+            db.set_dialog_messages(
+                user_id,
+                [new_dialog_message],
+                dialog_id=None
+            )
+            db.set_user_attribute(user_id, "n_used_tokens", n_used_tokens)
+        else:
+            answer, n_used_tokens, n_first_dialog_messages_removed = chatgpt_instance.send_message(
+                message,
+                dialog_messages=db.get_dialog_messages(user_id, dialog_id=None),
+                chat_mode=db.get_user_attribute(user_id, "current_chat_mode"),
+            )
 
-        # update user data
-        new_dialog_message = {"user": message, "bot": answer, "date": datetime.now()}
-        db.set_dialog_messages(
-            user_id,
-            db.get_dialog_messages(user_id, dialog_id=None) + [new_dialog_message],
-            dialog_id=None
-        )
+            # update user data
+            new_dialog_message = {"user": message, "bot": answer, "date": datetime.now()}
+            db.set_dialog_messages(
+                user_id,
+                db.get_dialog_messages(user_id, dialog_id=None) + [new_dialog_message],
+                dialog_id=None
+            )
 
-        db.set_user_attribute(user_id, "n_used_tokens", n_used_tokens + db.get_user_attribute(user_id, "n_used_tokens"))
+            db.set_user_attribute(user_id, "n_used_tokens", n_used_tokens + db.get_user_attribute(user_id, "n_used_tokens"))
 
     except Exception as e:
         error_text = f"Something went wrong during completion. Reason: {e}"
