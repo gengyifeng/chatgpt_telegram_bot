@@ -50,7 +50,7 @@ CHAT_MODES = {
     "multi_rounds_summary": {
         "name": "Multiple Rounds ChatGPT With Summary",
         "welcome_message": "Hi, I'm <b>Multiple Rounds ChatGPT</b>. How can I help you?",
-        "prompt_start": '''If the question is in Chinese, please make sure the whole response is in Chinese. In the following conversations, your response in every turn contains two parts. Before answer the current querstion, you make the first part with a summary with "Summary:", which summary the content of your whole last response containing first paragraph within 1000 tokens. If there is no previous response, return "empty" as the first part in new response.  The second part is the answer to the current question.   Don't forget to generate "Summary:" part in every turn. '''
+        "prompt_start": '''Reply with the same language with my question. In the following conversation, your response in every turn contains two parts. The first part starts with "Summary:" and the second part starts with "Answer:".  The "Summary:" part must cover and summarize the content of both your previous "Summary:" and "Answer:" parts before my question.  The "Summary:" part should be within 1000 tokens. If there is no previous response, return "empty" as the "Summary:" part. The "Answer:" part contains the normal answer to my question given the "Summary:" part as the context. Make sure to return both "Summary:" part and "Answer:" part in every turn. '''
     },
 }
 
