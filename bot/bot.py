@@ -120,7 +120,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
                 [new_dialog_message],
                 dialog_id=None
             )
-            db.set_user_attribute(user_id, "n_used_tokens", n_used_tokens)
+            db.set_user_attribute(user_id, "n_used_tokens", n_used_tokens + db.get_user_attribute(user_id, "n_used_tokens"))
         else:
             answer, n_used_tokens, n_first_dialog_messages_removed = chatgpt_instance.send_message(
                 message,
