@@ -172,7 +172,6 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
             }[openai_utils.CHAT_MODES[chat_mode]["parse_mode"]]
 
             chatgpt_instance = openai_utils.ChatGPT(model=current_model)
-            if 
             if config.enable_message_streaming:
                 gen = chatgpt_instance.send_message_stream(_message, dialog_messages=dialog_messages, chat_mode=chat_mode)
             else:
@@ -211,7 +210,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
 
             # update user data
             new_dialog_message = {"user": _message, "bot": answer, "date": datetime.now()}
-            if mode == "multi_rounds_summary":
+            if chat_mode == "multi_rounds_summary":
                 db.set_dialog_messages(
                     user_id,
                     [new_dialog_message],
